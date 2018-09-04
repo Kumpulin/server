@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "rollback": "knex migrate:rollback",
+    "migrate": "knex migrate:latest && knex seed:run",
+    "start": "npm run migrate && node app.js"
+  },
+  "keywords": [],
+  "author": "Gibran Khrisna Putra <gibrankhrisnaputra@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "jsonwebtoken": "^8.3.0",
+    "knex": "^0.15.2",
+    "morgan": "^1.9.0",
+    "mysql2": "^1.6.1",
+    "objection": "^1.2.2",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0"
+  }
+}
