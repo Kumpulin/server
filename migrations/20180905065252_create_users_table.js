@@ -3,6 +3,7 @@ exports.up = knex => {
     .createTable('users', table => {
       table.increments('id').primary()
       table.string('googleId').nullable()
+      table.string('facebookId').nullable()
       table.string('name').nullable()
       table.string('email').unique()
       table.string('password').nullable()

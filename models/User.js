@@ -17,6 +17,7 @@ class User extends Model {
       properties: {
         id: { type: 'integer' },
         googleId: { type: ['string', 'null'] },
+        facebookId: { type: ['string', 'null'] },
         name: { type: ['string', 'null'] },
         email: { type: 'string' },
         password: { type: ['string', 'null'] }

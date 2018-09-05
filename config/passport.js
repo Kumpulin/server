@@ -13,6 +13,13 @@ exports.googleOptions = {
   callbackURL: "http://localhost:8081/api/auth/google/callback"
 }
 
+exports.facebookOptions = {
+  clientID: process.env.FACEBOOK_APP_ID,
+  clientSecret: process.env.FACEBOOK_APP_SECRET,
+  callbackURL: "http://localhost:8081/api/auth/facebook/callback",
+  profileFields: ['id', 'displayName', 'email']
+}
+
 exports.jwtOptions = {
   secretOrKey: process.env.JWT_SECRET,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
