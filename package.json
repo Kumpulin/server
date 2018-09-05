@@ -13,6 +13,7 @@
   "author": "Gibran Khrisna Putra <gibrankhrisnaputra@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
@@ -22,7 +23,9 @@
     "jsonwebtoken": "^8.3.0",
     "knex": "^0.15.2",
     "morgan": "^1.9.0",
+    "ms": "^2.1.1",
     "mysql2": "^1.6.1",
+    "nanoid": "^1.2.3",
     "objection": "^1.2.2",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",

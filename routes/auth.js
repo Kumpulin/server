@@ -6,6 +6,10 @@ const AuthController = require('../controllers/AuthController')
 
 router.post('/signup', AuthController.signUp)
 router.post('/signin', AuthController.signIn)
+router.post('/forgot_password', AuthController.forgotPassword)
+router.route('/reset_password')
+  .get(AuthController.redirectResetPassword)
+  .post(AuthController.resetPassword)
 router.post('/refresh_token', AuthController.refreshToken)
 
 // Google OAuth 2.0

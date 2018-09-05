@@ -7,6 +7,8 @@ exports.up = knex => {
       table.string('name').nullable()
       table.string('email').unique()
       table.string('password').nullable()
+      table.string('resetPasswordToken').nullable()
+      table.string('resetPasswordExpires').nullable()
       table.timestamps(true, true)
     })
 }

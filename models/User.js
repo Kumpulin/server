@@ -20,7 +20,9 @@ class User extends Model {
         facebookId: { type: ['string', 'null'] },
         name: { type: ['string', 'null'] },
         email: { type: 'string' },
-        password: { type: ['string', 'null'] }
+        password: { type: ['string', 'null'] },
+        resetPasswordToken: { type: ['string', 'null'] },
+        resetPasswordExpires: { type: ['string', 'null'] }
       }
     }
   }
