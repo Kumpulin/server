@@ -88,9 +88,7 @@ exports.resetPassword = async (req, res, next) => {
 }
 
 exports.refreshToken = (req, res, next) => {
-  const token = req.headers['authorization'].split('Bearer ')[1]
-
-  const user = jwt.verify(token, process.env.JWT_SECRET, jwtConfig)
+  const user = jwt.verify(req.body.jwt_token, process.env.JWT_SECRET, jwtConfig)
 
   if (user.iat > user.exp) return next({ message: 'Token has been expired.' })
 
