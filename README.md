@@ -6,27 +6,16 @@ Install `mysql` or `mariadb`
 ### Google OAuth 2.0
 you must register an application with Google. If you have not already done so, a new project can be created in the [Google Developers Console](https://console.developers.google.com/)
 
+### Facebook OAuth 2.0
+Register an application with Facebook. If you have not already done so, a new application can be created at [Facebook Developers](https://developers.facebook.com/).
+
 ## Installation and Configuration
 Install dependencies.
 ```sh
 npm i
 ```
 
-Then edit .env contents in your editor. Refer to .env.defaults for the default values.
-
-```conf
-PORT=8080
-
-DB_HOST=
-DB_USER=
-DB_PASS=
-DB_NAME=
-
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-
-JWT_SECRET=
-```
+Then edit .env contents in your editor. Refer to .env.update for the default values.
 
 Create database.
 
@@ -62,6 +51,8 @@ npm start
 | `/auth/signin` | POST | Sign in | `email`, `password` | [token](#jwt-token) |
 | `/auth/google` | GET | Sign in using google | - | - |
 | `/auth/google/callback` | GET | Path that users are redirected to after they have authenticated with Google | - | [token](#jwt-token) |
+| `/auth/facebook` | GET | Sign in using facebook | - | - |
+| `/auth/facebook/callback` | GET | Path that users are redirected to after they have authenticated with Facebook | - | [token](#jwt-token) |
 
 ### `/account`
 Authentication required
