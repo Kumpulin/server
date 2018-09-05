@@ -8,4 +8,8 @@ router.post('/signup', AuthController.signUp)
 router.post('/signin', AuthController.signIn)
 router.post('/refresh_token', AuthController.refreshToken)
 
+// Google OAuth 2.0
+router.get('/google', passport.authenticate('signInGoogle', { scope: ['profile', 'email'] }))
+router.get('/google/callback', passport.authenticate('signInGoogle', { session: false }), AuthController.OAuthCallback)
+
 module.exports = router

@@ -1,6 +1,5 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const FacebookStrategy = require('passport-facebook').Strategy
 const LocalStrategy = require('passport-local').Strategy
 const JWTStrategy = require('passport-jwt').Strategy
 const bcrypt = require('bcrypt')
@@ -47,6 +46,26 @@ passport.use('signIn', new LocalStrategy(passportConfig.localOptions, async (ema
     return done(null, user)
   } catch (err) {
     done(err, false)
+  }
+}))
+
+passport.use('signInGoogle', new GoogleStrategy(passportConfig.googleOptions, async (accessToken, refreshToken, profile, done) => {
+  try {
+    const user = await User.query().where({ googleId: profile.id }).first()
+
+    if (!user) {
+      const newUser = await User.query().insert({
+        googleId: profile.id.toString(),
+        name: profile.displayName,
+        email: profile.emails[0].value
+      })
+
+      return done(null, newUser)
+    }
+
+    return done(null, user)
+  } catch (err) {
+    done(err)
   }
 }))
 

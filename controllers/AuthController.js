@@ -44,3 +44,14 @@ exports.refreshToken = (req, res, next) => {
   const newToken = jwt.sign({ ...user, exp: user.exp - Date.now() / 1000 }, process.env.JWT_SECRET)
   return res.json({ token: newToken })
 }
+
+exports.OAuthCallback = (req, res) => {
+  const user = {
+    id: req.user.id,
+    email: req.user.email
+  }
+
+  const token = jwt.sign({ ...user }, process.env.JWT_SECRET, jwtConfig)
+
+  res.json({ token })
+}
