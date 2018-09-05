@@ -22,8 +22,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
 
-app.get('/', (req, res) => res.send(req.query.token))
-
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/users', passport.authenticate('jwt', { session : false }), require('./routes/users'))
 app.use('/api/account', passport.authenticate('jwt', { session : false }), require('./routes/account'))
