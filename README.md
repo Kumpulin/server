@@ -49,6 +49,10 @@ npm start
 |---|---|---|---|---|
 | `/auth/signup` | POST | Sign up | `email`, `password` | [user](#user) |
 | `/auth/signin` | POST | Sign in | `email`, `password` | [token](#jwt-token) |
+| `/auth/forgot_password` | POST | Send email including link for reset password page | `email` | `{ }` |
+| `/auth/reset_password` | GET | Redirect to reset password page if token is still valid | - | - |
+| `/auth/reset_password` | POST | Reset passwod | `password`, `token` | [user](#user) |
+| `/auth/refresh_token` | POST | Refresh JWT token | `token` | [token](#jwt-token) |
 | `/auth/google` | GET | Sign in using google | - | - |
 | `/auth/google/callback` | GET | Path that users are redirected to after they have authenticated with Google | - | [token](#jwt-token) |
 | `/auth/facebook` | GET | Sign in using facebook | - | - |
