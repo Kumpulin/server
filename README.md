@@ -1,44 +1,39 @@
-# Kumpulin API
+# Kumpulin APIw
+## Tech Stack
+* [**Express**](https://expressjs.com/) Node.js Framework
+* [**Passport**](https://expressjs.com/) Authentication
+* [**Sendgrid**](https://sendgrid.com/) Email Delivery Service
+* [**Knex.js**](https://knexjs.org/) SQL query builder
+* [**Objection.js**](https://vincit.github.io/objection.js/) ORM
+* [**MySQL**](https://www.mysql.com/) SQL Database
+* [**bcrypt**](https://github.com/kelektiv/node.bcrypt.js) Password hashing function
+
 ## Preparation
 ### Database
 Install `mysql` or `mariadb`
 
 ### Google OAuth 2.0
-you must register an application with Google. If you have not already done so, a new project can be created in the [Google Developers Console](https://console.developers.google.com/)
+Get `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` from [Google Developers Console](https://console.developers.google.com/)
 
 ### Facebook OAuth 2.0
-Register an application with Facebook. If you have not already done so, a new application can be created at [Facebook Developers](https://developers.facebook.com/).
+Get `FACEBOOK_APP_ID` and `FACEBOOK_APP_SECRET` from [Facebook Developers](https://developers.facebook.com/).
+
+### Sendgrid API Key
+Get `SENDGRID_API_KEY` from [Sendgrid](https://app.sendgrid.com/)
 
 ## Installation and Configuration
-Install dependencies.
-```sh
-npm i
-```
-
-Then edit .env contents in your editor. Refer to .env.update for the default values.
-
-Create database.
-
-Run `migrate` script only once to run the migration files, create the tables into the database.
-```sh
-npm run migrate
-```
-
-You can run `seed` script only once also to run the seeder files, insert demo data into the database.
-```sh
-npm run seed
-```
+1. Run: `npm install` to install the dependencies
+2. Create database
+3. Edit .env
+4. Run: `npm migrate` to create the tables into the database
 
 ## Running
 ### Development
-```sh
-npm run dev
-```
+1. Run: `npm run seed` to insert demo data into the database
+2. Run: `npm run dev` to run server
 
 ### Production
-```sh
-npm start
-```
+1. Run: `npm run start` to run server
 
 ## API Endpoints
 ### Authentication

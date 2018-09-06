@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "rollback": "knex migrate:rollback",
-    "migrate": "knex migrate:latest && knex seed:run",
+    "migrate": "knex migrate:latest",
+    "seed": " knex seed:run",
     "start": "npm run migrate && node app.js"
   },
   "keywords": [],
