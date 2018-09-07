@@ -1,8 +1,8 @@
 const { Model } = require('objection')
 
-class User extends Model {
+class EventAttendees extends Model {
   static get tableName () {
-    return 'users'
+    return 'event_attendees'
   }
 
   static get idColumn () {
@@ -10,29 +10,29 @@ class User extends Model {
   }
 
   static get relationMappings () {
+    const User = require('./User')
     const Event = require('./Event')
-    const EventAttendees = require('./EventAttendees')
 
     return {
-      events: {
+      attendee: {
         relation: Model.HasManyRelation,
-        modelClass: Event,
+        modelClass: User,
         join: {
-          from: 'users.id',
-          to: 'events.userId'
+          from: 'event_attendees.userId',
+          to: 'users.id'
         }
       },
 
-      attendedEvent: {
+      event: {
         relation: Model.HasManyRelation,
-        modelClass: EventAttendees,
+        modelClass: Event,
         join: {
-          from: 'users.id',
-          to: 'event_attendees.userId'
+          from: 'event_attendees.eventId',
+          to: 'events.id'
         }
       }
     }
   }
 }
 
-module.exports = User
+module.exports = EventAttendees
