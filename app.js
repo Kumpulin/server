@@ -8,6 +8,7 @@ const Knex = require('knex')
 const { Model } = require('objection')
 const helmet = require('helmet')
 const passport = require('passport')
+const path = require('path')
 
 const app = express()
 const knex = Knex(require('./knexfile'))
@@ -20,11 +21,13 @@ app.use(cors())
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(passport.initialize())
 
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/users', passport.authenticate('jwt', { session : false }), require('./routes/users'))
 app.use('/api/account', passport.authenticate('jwt', { session : false }), require('./routes/account'))
+app.use('/api/events', require('./routes/events'))
 
 app.use(function(err, req, res, next) {
   if (Object.keys(err)[0] === 'message') {
