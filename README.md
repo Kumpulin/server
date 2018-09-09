@@ -1,4 +1,4 @@
-# Kumpulin APIw
+# Kumpulin API
 ## Tech Stack
 * [**Express**](https://expressjs.com/) Node.js Framework
 * [**Passport**](https://expressjs.com/) Authentication
