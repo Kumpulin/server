@@ -4,7 +4,10 @@ const bcrypt = require('bcrypt')
 let users = []
 
 for (let i = 0; i < 5; i++) {
-  users.push(generateUser(faker.name.findName(), faker.internet.email(), 'secret'))
+  const name = faker.name.findName()
+  const email = `${name.split(' ').join('').toLowerCase()}@gmail.com`
+
+  users.push(generateUser(name, email, 'secret'))
 }
 
 exports.seed = (knex, Promise) => {
@@ -17,8 +20,8 @@ function generateUser (name, email, password) {
   const hash = bcrypt.hashSync(password, salt)
 
   return {
-    name: name,
-    email: email,
+    name,
+    email,
     password: hash
   }
 }
