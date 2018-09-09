@@ -43,8 +43,8 @@ Get `SENDGRID_API_KEY` from [Sendgrid](https://app.sendgrid.com/)
 | Endpoint | HTTP | Description | Body | Return |
 |---|---|---|---|---|
 | `/auth/signup` | POST | Sign up | `email`, `password` | [user](#user) |
-| `/auth/signin` | POST | Sign in | `email`, `password` | [token](#jwt-token) |
-| `/auth/forgot_password` | POST | Send email including link for reset password page | `email` | `{ }` |
+| `/auth/signin` | POST | Sign in | `email`, `password` | [user](#user), [token](#jwt-token) |
+| `/auth/forgot_password` | POST | Send email including link for reset password page | `email` | `{ success: true }` |
 | `/auth/reset_password` | GET | Redirect to reset password page if token is still valid | - | - |
 | `/auth/reset_password` | POST | Reset passwod | `password`, `token` | [user](#user) |
 | `/auth/refresh_token` | POST | Refresh JWT token | `token` | [token](#jwt-token) |
@@ -69,7 +69,7 @@ Authentication required
 | `/users/` | GET | Get all users data | - | [List of users](#users) |
 | `/users/:id` | GET | Get one user user by id | - | [user](#user) |
 | `/users/:id` | PATCH | Update one user data by id | `all` | [user](#user) |
-| `/users/:id` | DELETE | Delete one user data by id | - | `{ }` |
+| `/users/:id` | DELETE | Delete one user data by id | - | `{ success: true }` |
 
 ## JSON Objects returned by API
 ### User
