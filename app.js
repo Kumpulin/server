@@ -31,10 +31,10 @@ app.use('/api/events', require('./routes/events'))
 
 app.use(function(err, req, res, next) {
   if (Object.keys(err)[0] === 'message') {
-    res.json({ error: err })
+    res.status(400).json({ error: err })
   } else {
     console.error(err)
-    res.json({
+    res.status(500).json({
       error: {
         message: 'An error occured'
       }
