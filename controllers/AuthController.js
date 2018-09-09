@@ -13,7 +13,7 @@ exports.signUp = (req, res, next) => {
 
     if (Object.keys(user).length === 0) return next({ message: 'Email has been registered' })
 
-    return res.json({ user })
+    return res.json({ success: true })
   })(req, res, next)
 }
 
@@ -26,9 +26,9 @@ exports.signIn = (req, res, next) => {
     req.login(user, { session: false }, err => {
       if (err) return next(err)
 
-      const token = jwt.sign({ ...user }, process.env.JWT_SECRET, jwtConfig)
+      const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, jwtConfig)
 
-      return res.json({ token })
+      return res.json({ user, token })
     })
   })(req, res, next)
 }
@@ -58,7 +58,7 @@ exports.forgotPassword = async (req, res, next) => {
 
     await sendgrid.send(mail)
 
-    res.json({})
+    res.json({ success: true })
   } catch (err) {
     return next(err)
   }

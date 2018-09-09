@@ -43,7 +43,7 @@ exports.deleteUserById = async (req, res, next) => {
   try {
     await User.query().deleteById(req.params.id)
 
-    res.json({})
+    res.json({ success: true })
   } catch (err) {
     next(err)
   }

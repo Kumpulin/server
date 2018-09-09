@@ -34,7 +34,7 @@ passport.use('signUp', new LocalStrategy(passportConfig.localOptions, async (ema
 
 passport.use('signIn', new LocalStrategy(passportConfig.localOptions, async (email, password, done) => {
   try {
-    const user = await User.query().select(...passportConfig.fields).where({ email }).first()
+    const user = await User.query().select().where({ email }).first()
 
     if (!user) done(null, false)
 
@@ -92,7 +92,7 @@ passport.use('signInFacebook', new FacebookStrategy(passportConfig.facebookOptio
 
 passport.use(new JWTStrategy(passportConfig.jwtOptions, async (req, payload, done) => {
   try {
-    const user = await User.query().select(...passportConfig.fields).findById(payload.id)
+    const user = await User.query().select().findById(payload.id)
 
     if (!user) return done(null, false)
 
