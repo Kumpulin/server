@@ -21,7 +21,6 @@ exports.up = knex => {
       table.string('city_name').notNull()
       table.decimal('latitude').notNull()
       table.decimal('longitude').notNull()
-      table.string('organizerName').nullable()
       table.string('eventImage').nullable()
       table
       .integer('userId')
