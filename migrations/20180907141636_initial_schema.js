@@ -21,21 +21,30 @@ exports.up = knex => {
       table.string('city_name').notNull()
       table.decimal('latitude').notNull()
       table.decimal('longitude').notNull()
-      table.string('eventImage').nullable()
       table
-      .integer('userId')
-      .unsigned()
-      .references('id')
-      .inTable('users')
+        .integer('userId')
+        .unsigned()
+        .references('id')
+        .inTable('users')
+      table.timestamps(true, true)
+    }),
+    knex.schema('event_images', table => {
+      table.increments('id').primary()
+      table
+        .integer('eventId')
+        .unsigned()
+        .references('id')
+        .inTable('events')
+      table.string('image').nullable()
       table.timestamps(true, true)
     }),
     knex.schema.createTable('event_details', table => {
       table.increments('id').primary()
       table
-      .integer('eventId')
-      .unsigned()
-      .references('id')
-      .inTable('events')
+        .integer('eventId')
+        .unsigned()
+        .references('id')
+        .inTable('events')
       table.string('full_address').notNull()
       table.text('description').nullable()
       table.enu('privacy', ['PUBLIC', 'PRIVATE']).notNull()
