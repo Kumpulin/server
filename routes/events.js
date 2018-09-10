@@ -10,11 +10,11 @@ const upload = multer(multerConfig)
 
 router.route('/')
   .get(EventController.getAllEvents)
-  .post(passport.authenticate('jwt', { session : false }), upload.single('eventImage'), EventController.createEvent)
+  .post(passport.authenticate('jwt', { session : false }), upload.array('eventImages'), EventController.createEvent)
 
 router.route('/:eventId')
   .get(EventController.getEventById)
-  .patch(passport.authenticate('jwt', { session : false }), upload.single('eventImage'), EventController.updateEvent)
+  .patch(passport.authenticate('jwt', { session : false }), upload.array('eventImages'), EventController.updateEvent)
 
 router.post('/:eventId/join', passport.authenticate('jwt', { session : false }), EventController.joinEvent)
 

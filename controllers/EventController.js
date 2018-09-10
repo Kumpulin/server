@@ -17,20 +17,19 @@ exports.getAllEvents = async (req, res, next) => {
 exports.createEvent = async (req, res, next) => {
   try {
     const event = await transaction(Event, EventDetails, async (Event, EventDetails) => {
-      delete req.body.event.eventImage
-
       const event = await Event
         .query()
-        .insert({ ...req.body.event, eventImage: req.file.path, userId: req.user.id })
+        .insert({ ...req.body.event, userId: req.user.id })
 
-      const eventDetails = await EventDetails
-        .query()
-        .insert({ eventId: event.id, ...req.body.eventDetails })
+      const images = req.files.map(image => ({ eventId: event.id, image: image.path }))
 
-      return { ...event, ...eventDetails }
+      await EventImages.query().insert(images)
+      await EventDetails.query().insert({ eventId: event.id, ...req.body.eventDetails })
+
+      return event
     })
 
-    res.json({ ...event })
+    res.json({ event })
   } catch (err) {
     next(err)
   }
@@ -49,21 +48,16 @@ exports.getEventById = async (req, res, next) => {
 exports.updateEvent = async (req, res, next) => {
   try {
     const event = await transaction(Event, EventDetails, async (Event, EventDetails) => {
-      delete req.body.event.eventImage
-
       const event = await Event
         .query()
         .patchAndFetchById(req.params.eventId, { ...req.body.event, eventImage: req.file.path })
 
-      const eventDetails = await EventDetails
-        .query()
-        .patch({ ...req.body.eventDetails })
-        .where({ eventId: req.params.eventId })
+      await EventDetails.query().patch({ ...req.body.eventDetails }).where({ eventId: req.params.eventId })
 
-      return { ...event, ...eventDetails }
+      return event
     })
 
-    res.json({ ...event })
+    res.json({ event })
   } catch (err) {
     next(err)
   }
