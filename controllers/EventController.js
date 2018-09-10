@@ -6,7 +6,7 @@ const EventAttendees = require('../models/EventAttendees')
 
 exports.getAllEvents = async (req, res, next) => {
   try {
-    const events = await Event.query(['id', 'title', 'latitude', 'longitude']).limit(limit).offset(offset)
+    const events = await Event.query()
 
     res.json({ events })
   } catch (err) {
