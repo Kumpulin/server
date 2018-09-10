@@ -15,6 +15,18 @@ exports.getCurrentUser = async (req, res, next) => {
   }
 }
 
+exports.updateProfile = async (req, res, next) => {
+  try {
+    const data = await User.query().patchAndFetchById(req.params.id, req.body)
+
+    delete data.password
+
+    res.json({ user: data })
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.changePassword = async (req, res, next) => {
   try {
     const user = await User.query().findById(req.user.id)
