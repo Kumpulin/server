@@ -65,16 +65,13 @@ exports.updateEvent = async (req, res, next) => {
 
 exports.searchEvents = async (req, res, next) => {
   try {
-    const query = req.params.query
-
-    if (query === '') {
-      return next({ message: 'Please input keyword' })
-    }
-
-    const events = await Event.query().where({
-      title: query,
-      organizerName: query
-    })
+    const events = await Event.query()
+      .join('event_details', 'events.id', '=', 'event_details.eventId')
+      .skipUndefined()
+      .where('title', 'like' `%${req.params.query}%`)
+      .andWhere('type', req.query.type)
+      .andWhere('topic', req.query.topic)
+      .andWhere('privacy', req.query.privacy)
 
     res.json({ events })
   } catch (err) {
