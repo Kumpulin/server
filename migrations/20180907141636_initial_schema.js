@@ -14,10 +14,8 @@ exports.up = knex => {
     knex.schema.createTable('events', table => {
       table.increments('id').primary()
       table.string('title').notNull()
-      table.date('startDate').notNull()
-      table.time('startTime').notNull()
-      table.date('endDate').nullable()
-      table.time('endTime').nullable()
+      table.datetime('start').notNull()
+      table.datetime('end').nullable()
       table.string('city_name').notNull()
       table.decimal('latitude').notNull()
       table.decimal('longitude').notNull()
