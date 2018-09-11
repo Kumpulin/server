@@ -22,7 +22,7 @@ class User extends Model {
         }
       },
 
-      joinedEvent: {
+      joinedEvents: {
         relation: Model.ManyToManyRelation,
         modelClass: Event,
         join: {
