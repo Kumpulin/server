@@ -11,6 +11,7 @@ class Event extends Model {
 
   static get relationMappings () {
     const User = require('./User')
+    const EventImage = require('./EventImage')
     const EventDetails = require('./EventDetails')
     const EventAttendees = require('./EventAttendee')
 
@@ -21,6 +22,15 @@ class Event extends Model {
         join: {
           from: 'events.userId',
           to: 'users.id'
+        }
+      },
+
+      images: {
+        relation: Model.HasManyRelation,
+        modelClass: EventImage,
+        join: {
+          from: 'events.id',
+          to: 'event_images.eventId'
         }
       },
 
