@@ -23,12 +23,16 @@ class User extends Model {
         }
       },
 
-      attendedEvent: {
-        relation: Model.HasManyRelation,
-        modelClass: EventAttendee,
+      joinedEvent: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Event,
         join: {
           from: 'users.id',
-          to: 'event_attendees.userId'
+          through: {
+            from: 'event_attendees.userId',
+            to: 'event_attendees.eventId',
+          },
+          to: 'events.id'
         }
       }
     }

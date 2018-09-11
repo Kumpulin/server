@@ -25,6 +25,19 @@ class Event extends Model {
         }
       },
 
+      joinedUsers: {
+        relation: Model.ManyToManyRelation,
+        modelClass: User,
+        join: {
+          from: 'events.id',
+          through: {
+            from: 'event_attendees.eventId',
+            to: 'event_attendees.userId'
+          },
+          to: 'users.id'
+        }
+      },
+
       images: {
         relation: Model.HasManyRelation,
         modelClass: EventImage,
