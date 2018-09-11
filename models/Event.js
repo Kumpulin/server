@@ -13,7 +13,6 @@ class Event extends Model {
     const User = require('./User')
     const EventImage = require('./EventImage')
     const EventDetails = require('./EventDetails')
-    const EventAttendee = require('./EventAttendee')
 
     return {
       creator: {
@@ -54,16 +53,7 @@ class Event extends Model {
           from: 'events.id',
           to: 'eventDetails.eventId'
         }
-      },
-
-      event: {
-        relation: Model.HasManyRelation,
-        modelClass: EventAttendee,
-        join: {
-          from: 'events.id',
-          to: 'event_attendees.eventId'
-        }
-      },
+      }
     }
   }
 }

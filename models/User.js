@@ -11,7 +11,6 @@ class User extends Model {
 
   static get relationMappings () {
     const Event = require('./Event')
-    const EventAttendee = require('./EventAttendee')
 
     return {
       events: {
