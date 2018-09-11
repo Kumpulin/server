@@ -2,7 +2,7 @@ const { transaction } = require('objection')
 
 const Event = require('../models/Event')
 const EventDetails = require('../models/EventDetails')
-const EventAttendees = require('../models/EventAttendees')
+const EventAttendees = require('../models/EventAttendee')
 
 exports.getAllEvents = async (req, res, next) => {
   try {
