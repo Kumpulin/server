@@ -11,7 +11,7 @@ class User extends Model {
 
   static get relationMappings () {
     const Event = require('./Event')
-    const EventAttendees = require('./EventAttendee')
+    const EventAttendee = require('./EventAttendee')
 
     return {
       events: {
@@ -25,7 +25,7 @@ class User extends Model {
 
       attendedEvent: {
         relation: Model.HasManyRelation,
-        modelClass: EventAttendees,
+        modelClass: EventAttendee,
         join: {
           from: 'users.id',
           to: 'event_attendees.userId'
