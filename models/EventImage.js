@@ -1,6 +1,6 @@
 const { Model } = require('objection')
 
-class EventAttendees extends Model {
+class EventImage extends Model {
   static get tableName () {
     return 'event_images'
   }
@@ -25,4 +25,4 @@ class EventAttendees extends Model {
   }
 }
 
-module.exports = EventAttendees
+module.exports = EventImage
