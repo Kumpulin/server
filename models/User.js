@@ -13,7 +13,7 @@ class User extends Model {
     const Event = require('./Event')
 
     return {
-      events: {
+      createdEvents: {
         relation: Model.HasManyRelation,
         modelClass: Event,
         join: {
