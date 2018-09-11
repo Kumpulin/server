@@ -1,6 +1,43 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 
+exports.getAllCreatedEvents = async (req, res, next) => {
+  try {
+    const user = await User.query().findById(req.user.id)
+
+    const liveEvents = await user.$relatedQuery('createdEvents').where('start', '>=', new Date().toISOString())
+    const pastEvents = await user.$relatedQuery('createdEvents').where('end', '<=', new Date().toISOString())
+
+    res.json({ events: { liveEvents, pastEvents } })
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.getAllJoinedEvents = async (req, res, next) => {
+  try {
+    const user = await User.query().findById(req.user.id)
+
+    const events = await user.$relatedQuery('joinedEvents').where('start', '>=', new Date().toISOString())
+
+    res.json({ events })
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.getAllAttendedEvents = async (req, res, next) => {
+  try {
+    const user = await User.query().findById(req.user.id)
+
+    const events = await user.$relatedQuery('joinedEvents').where('end', '<=', new Date().toISOString())
+
+    res.json({ events })
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.getCurrentUser = async (req, res, next) => {
   try {
     const user = await User.query().findById(req.user.id)
