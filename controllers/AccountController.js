@@ -1,6 +1,4 @@
 const User = require('../models/User')
-const jwt = require('jsonwebtoken')
-const jwtConfig = require('../config/jwt')
 const bcrypt = require('bcrypt')
 
 exports.getCurrentUser = async (req, res, next) => {
