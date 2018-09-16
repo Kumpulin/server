@@ -1,15 +1,15 @@
 const { Model } = require('objection')
 
 class Event extends Model {
-  static get tableName () {
+  static get tableName() {
     return 'events'
   }
 
-  static get idColumn () {
+  static get idColumn() {
     return 'id'
   }
 
-  static get relationMappings () {
+  static get relationMappings() {
     const User = require('./User')
     const EventImage = require('./EventImage')
     const EventDetails = require('./EventDetails')
@@ -24,7 +24,7 @@ class Event extends Model {
         }
       },
 
-      joinedUsers: {
+      attendees: {
         relation: Model.ManyToManyRelation,
         modelClass: User,
         join: {
