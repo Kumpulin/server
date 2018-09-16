@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(passport.initialize())
 
 app.use('/api/auth', require('./routes/auth'))
-app.use('/api/users', passport.authenticate('jwt', { session : false }), require('./routes/users'))
 app.use('/api/account', passport.authenticate('jwt', { session : false }), require('./routes/account'))
 app.use('/api/events', require('./routes/events'))
 
