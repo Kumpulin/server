@@ -2,19 +2,20 @@ const { ExtractJwt } = require('passport-jwt')
 
 exports.localOptions = {
   usernameField: 'email',
-  session: false
+  session: false,
+  passReqToCallback: true
 }
 
 exports.googleOptions = {
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:8081/api/auth/google/callback"
+  callbackURL: 'http://localhost:8081/api/auth/google/callback'
 }
 
 exports.facebookOptions = {
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: "http://localhost:8081/api/auth/facebook/callback",
+  callbackURL: 'http://localhost:8081/api/auth/facebook/callback',
   profileFields: ['id', 'displayName', 'email']
 }
 

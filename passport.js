@@ -8,100 +8,138 @@ const bcrypt = require('bcrypt')
 const passportConfig = require('./config/passport')
 const User = require('./models/User')
 
-passport.use('signUp', new LocalStrategy(passportConfig.localOptions, async (email, password, done) => {
-  try {
-    let user
+passport.use(
+  'signUp',
+  new LocalStrategy(
+    passportConfig.localOptions,
+    async (req, email, password, done) => {
+      try {
+        let user
 
-    user = await User.query().where({ email }).first()
+        user = await User.query()
+          .where({ email })
+          .first()
 
-    if (user) return done(null, {})
+        if (user) return done(null, {})
 
-    const salt = await bcrypt.genSalt(12)
-    const hash = await bcrypt.hash(password, salt)
+        const salt = await bcrypt.genSalt(12)
+        const hash = await bcrypt.hash(password, salt)
 
-    user = await User.query().insert({
-      email,
-      password: hash
-    })
+        user = await User.query().insert({
+          name: req.body.name,
+          email,
+          password: hash
+        })
 
-    delete user.password
+        delete user.password
 
-    return done(null, { ...user })
-  } catch (err) {
-    done(err, false)
-  }
-}))
-
-passport.use('signIn', new LocalStrategy(passportConfig.localOptions, async (email, password, done) => {
-  try {
-    const user = await User.query().select().where({ email }).first()
-
-    if (!user) done(null, false)
-
-    const validate = await bcrypt.compare(password, user.password)
-
-    if (!validate) done(null, false)
-
-    delete user.password
-
-    return done(null, user)
-  } catch (err) {
-    done(err, false)
-  }
-}))
-
-passport.use('signInGoogle', new GoogleStrategy(passportConfig.googleOptions, async (accessToken, refreshToken, profile, done) => {
-  try {
-    const user = await User.query().where({ googleId: profile.id }).first()
-
-    if (!user) {
-      const newUser = await User.query().insert({
-        googleId: profile.id.toString(),
-        name: profile.displayName,
-        email: profile.emails[0].value
-      })
-
-      return done(null, newUser)
+        return done(null, { ...user })
+      } catch (err) {
+        done(err, false)
+      }
     }
+  )
+)
 
-    return done(null, user)
-  } catch (err) {
-    done(err)
-  }
-}))
+passport.use(
+  'signIn',
+  new LocalStrategy(
+    passportConfig.localOptions,
+    async (req, email, password, done) => {
+      try {
+        const user = await User.query()
+          .select()
+          .where({ email })
+          .first()
 
-passport.use('signInFacebook', new FacebookStrategy(passportConfig.facebookOptions, async (accessToken, refreshToken, profile, done) => {
-  try {
-    const user = await User.query().where({ facebookId: profile.id }).first()
+        if (!user) done(null, false)
 
-    if (!user) {
-      const newUser = await User.query().insert({
-        facebookId: profile.id.toString(),
-        name: profile.displayName,
-        email: profile.emails[0].value
-      })
+        const validate = await bcrypt.compare(password, user.password)
 
-      return done(null, newUser)
+        if (!validate) done(null, false)
+
+        delete user.password
+
+        return done(null, user)
+      } catch (err) {
+        done(err, false)
+      }
     }
+  )
+)
 
-    return done(null, user)
-  } catch (err) {
-    done(err)
-  }
-}))
+passport.use(
+  'signInGoogle',
+  new GoogleStrategy(
+    passportConfig.googleOptions,
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const user = await User.query()
+          .where({ googleId: profile.id })
+          .first()
 
-passport.use(new JWTStrategy(passportConfig.jwtOptions, async (req, payload, done) => {
-  try {
-    const user = await User.query().select().findById(payload.id)
+        if (!user) {
+          const newUser = await User.query().insert({
+            googleId: profile.id.toString(),
+            name: profile.displayName,
+            email: profile.emails[0].value
+          })
 
-    if (!user) return done(null, false)
+          return done(null, newUser)
+        }
 
-    delete user.password
+        return done(null, user)
+      } catch (err) {
+        done(err)
+      }
+    }
+  )
+)
 
-    req.user = user
+passport.use(
+  'signInFacebook',
+  new FacebookStrategy(
+    passportConfig.facebookOptions,
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const user = await User.query()
+          .where({ facebookId: profile.id })
+          .first()
 
-    return done(null, user)
-  } catch (err) {
-    done(err, false)
-  }
-}))
+        if (!user) {
+          const newUser = await User.query().insert({
+            facebookId: profile.id.toString(),
+            name: profile.displayName,
+            email: profile.emails[0].value
+          })
+
+          return done(null, newUser)
+        }
+
+        return done(null, user)
+      } catch (err) {
+        done(err)
+      }
+    }
+  )
+)
+
+passport.use(
+  new JWTStrategy(passportConfig.jwtOptions, async (req, payload, done) => {
+    try {
+      const user = await User.query()
+        .select()
+        .findById(payload.id)
+
+      if (!user) return done(null, false)
+
+      delete user.password
+
+      req.user = user
+
+      return done(null, user)
+    } catch (err) {
+      done(err, false)
+    }
+  })
+)
