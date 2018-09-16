@@ -5,8 +5,12 @@ exports.getAllCreatedEvents = async (req, res, next) => {
   try {
     const user = await User.query().findById(req.user.id)
 
-    const liveEvents = await user.$relatedQuery('createdEvents').where('start', '>=', new Date().toISOString())
-    const pastEvents = await user.$relatedQuery('createdEvents').where('end', '<=', new Date().toISOString())
+    const liveEvents = await user
+      .$relatedQuery('createdEvents')
+      .where('start', '>=', new Date().toISOString())
+    const pastEvents = await user
+      .$relatedQuery('createdEvents')
+      .where('end', '<=', new Date().toISOString())
 
     res.json({ events: { liveEvents, pastEvents } })
   } catch (err) {
@@ -18,7 +22,9 @@ exports.getAllJoinedEvents = async (req, res, next) => {
   try {
     const user = await User.query().findById(req.user.id)
 
-    const events = await user.$relatedQuery('joinedEvents').where('start', '>=', new Date().toISOString())
+    const events = await user
+      .$relatedQuery('joinedEvents')
+      .where('start', '>=', new Date().toISOString())
 
     res.json({ events })
   } catch (err) {
@@ -30,7 +36,9 @@ exports.getAllAttendedEvents = async (req, res, next) => {
   try {
     const user = await User.query().findById(req.user.id)
 
-    const events = await user.$relatedQuery('joinedEvents').where('end', '<=', new Date().toISOString())
+    const events = await user
+      .$relatedQuery('joinedEvents')
+      .where('end', '<=', new Date().toISOString())
 
     res.json({ events })
   } catch (err) {
@@ -38,7 +46,7 @@ exports.getAllAttendedEvents = async (req, res, next) => {
   }
 }
 
-exports.getCurrentUser = async (req, res, next) => {
+exports.getUserProfile = async (req, res, next) => {
   try {
     const user = await User.query().findById(req.user.id)
 
@@ -73,7 +81,9 @@ exports.changePassword = async (req, res, next) => {
     const salt = await bcrypt.genSalt(12)
     const hash = await bcrypt.hash(req.body.newPassword, salt)
 
-    const updatedUser = await User.query().patchAndFetchById(req.user.id, { password: hash })
+    const updatedUser = await User.query().patchAndFetchById(req.user.id, {
+      password: hash
+    })
 
     delete updatedUser.password
 
