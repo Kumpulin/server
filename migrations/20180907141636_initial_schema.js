@@ -1,6 +1,6 @@
 exports.up = knex => {
-  return Promise.all([
-    knex.schema.createTable('users', table => {
+  return knex.schema
+    .createTable('users', table => {
       table.increments('id').primary()
       table.string('googleId').nullable()
       table.string('facebookId').nullable()
@@ -11,8 +11,8 @@ exports.up = knex => {
       table.string('resetPasswordExpires').nullable()
       table.string('image')
       table.timestamps(true, true)
-    }),
-    knex.schema.createTable('events', table => {
+    })
+    .createTable('events', table => {
       table.increments('id').primary()
       table.string('title').notNull()
       table.datetime('start').notNull()
@@ -26,8 +26,8 @@ exports.up = knex => {
         .references('id')
         .inTable('users')
       table.timestamps(true, true)
-    }),
-    knex.schema('event_images', table => {
+    })
+    .createTable('event_images', table => {
       table.increments('id').primary()
       table
         .integer('eventId')
@@ -36,8 +36,8 @@ exports.up = knex => {
         .inTable('events')
       table.string('image').nullable()
       table.timestamps(true, true)
-    }),
-    knex.schema.createTable('event_details', table => {
+    })
+    .createTable('event_details', table => {
       table.increments('id').primary()
       table
         .integer('eventId')
@@ -51,8 +51,8 @@ exports.up = knex => {
       table.string('type').nullable()
       table.string('topic').nullable()
       table.timestamps(true, true)
-    }),
-    knex.schema.createTable('event_attendees', table => {
+    })
+    .createTable('event_attendees', table => {
       table.increments('id').primary()
       table
         .integer('userId')
@@ -66,13 +66,12 @@ exports.up = knex => {
         .inTable('events')
       table.timestamps(true, true)
     })
-  ])
 }
 
 exports.down = knex => {
   return knex.schema
-    .dropTable('users')
-    .dropTable('events')
-    .dropTable('event_details')
-    .dropTable('event_attendees')
+    .dropTableIfExists('users')
+    .dropTableIfExists('events')
+    .dropTableIfExists('event_details')
+    .dropTableIfExists('event_attendees')
 }
