@@ -77,7 +77,17 @@ exports.getEventDetails = async (req, res, next) => {
     const images = await event.$relatedQuery('images')
     const details = await event.$relatedQuery('details')
 
-    res.json({ images, details })
+    const eventDetails = {
+      ...images[0],
+      ...details
+    }
+
+    delete eventDetails.id
+    delete eventDetails.eventId
+    delete eventDetails.created_at
+    delete eventDetails.updated_at
+
+    res.json(eventDetails)
   } catch (err) {
     next(err)
   }
