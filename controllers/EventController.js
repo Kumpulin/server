@@ -76,10 +76,16 @@ exports.getEventDetails = async (req, res, next) => {
     const event = await Event.query().findById(req.params.eventId)
     const images = await event.$relatedQuery('images')
     const details = await event.$relatedQuery('details')
+    const creator = await event
+      .$relatedQuery('creator')
+      .select('users.name', 'users.id')
+    const attendees = await event.$relatedQuery('attendees').select('users.id')
 
     const eventDetails = {
       ...images[0],
-      ...details
+      ...details,
+      user: creator,
+      attendees: attendees.map(attendee => attendee.id)
     }
 
     delete eventDetails.id
@@ -138,7 +144,7 @@ exports.joinEvent = async (req, res, next) => {
   try {
     const event = await Event.query().findById(req.params.eventId)
 
-    await event.$relatedQuery('attendees').relate(req.body.id)
+    await event.$relatedQuery('attendees').relate(req.user.id)
 
     res.json({ success: true })
   } catch (err) {
