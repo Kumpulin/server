@@ -1,6 +1,7 @@
 const { transaction } = require('objection')
 
 const Event = require('../models/Event')
+const EventImage = require('../models/EventImage')
 const EventDetails = require('../models/EventDetails')
 
 exports.getAllEvents = async (req, res, next) => {
@@ -17,22 +18,36 @@ exports.createEvent = async (req, res, next) => {
   try {
     const event = await transaction(
       Event,
+      EventImage,
       EventDetails,
-      async (Event, EventDetails) => {
+      async (Event, EventImage, EventDetails) => {
+        const eventDetails = JSON.parse(req.body.event_details)
+        const additionalSettings = JSON.parse(req.body.additional_settings)
+
         const event = await Event.query().insert({
-          ...req.body.event,
+          title: eventDetails.title,
+          start: eventDetails.start,
+          end: eventDetails.end,
+          city_name: eventDetails.city_name,
+          latitude: eventDetails.latitude,
+          longitude: eventDetails.longitude,
           userId: req.user.id
         })
 
         const images = req.files.map(image => ({
           eventId: event.id,
-          image: image.path
+          image: image.filename
         }))
 
-        await EventImages.query().insert(images)
+        await EventImage.query().insert(images)
         await EventDetails.query().insert({
           eventId: event.id,
-          ...req.body.eventDetails
+          full_address: eventDetails.full_address,
+          description: eventDetails.description,
+          privacy: additionalSettings.privacy,
+          password: additionalSettings.password,
+          type: additionalSettings.type,
+          topic: additionalSettings.topic
         })
 
         return event
