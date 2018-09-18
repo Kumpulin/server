@@ -51,7 +51,7 @@ class Event extends Model {
         modelClass: EventDetails,
         join: {
           from: 'events.id',
-          to: 'eventDetails.eventId'
+          to: 'event_details.eventId'
         }
       }
     }
