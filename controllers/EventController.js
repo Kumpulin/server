@@ -1,4 +1,5 @@
 const { transaction } = require('objection')
+const format = require('date-fns/format')
 
 const Event = require('../models/Event')
 const EventImage = require('../models/EventImage')
@@ -26,8 +27,8 @@ exports.createEvent = async (req, res, next) => {
 
         const event = await Event.query().insert({
           title: eventDetails.title,
-          start: eventDetails.start,
-          end: eventDetails.end,
+          start: format(eventDetails.start, 'YYYY-MM-DD HH:mm:ss'),
+          end: format(eventDetails.end, 'YYYY-MM-DD HH:mm:ss'),
           city_name: eventDetails.city_name,
           latitude: eventDetails.latitude,
           longitude: eventDetails.longitude,
@@ -40,6 +41,7 @@ exports.createEvent = async (req, res, next) => {
         }))
 
         await EventImage.query().insert(images)
+
         await EventDetails.query().insert({
           eventId: event.id,
           full_address: eventDetails.full_address,
@@ -53,7 +55,6 @@ exports.createEvent = async (req, res, next) => {
         return event
       }
     )
-
     res.json({ event })
   } catch (err) {
     next(err)
