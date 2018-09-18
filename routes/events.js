@@ -3,20 +3,34 @@ const multer = require('multer')
 const router = express.Router()
 const passport = require('passport')
 
-const multerConfig = require('../config/multer')
+const storage = require('../config/multer')
 const EventController = require('../controllers/EventController')
 
-const upload = multer(multerConfig)
+const upload = multer({ storage })
 
-router.route('/')
+router
+  .route('/')
   .get(EventController.getAllEvents)
-  .post(passport.authenticate('jwt', { session : false }), upload.array('eventImages'), EventController.createEvent)
+  .post(
+    passport.authenticate('jwt', { session: false }),
+    upload.array('images'),
+    EventController.createEvent
+  )
 
-router.route('/:eventId')
+router
+  .route('/:eventId')
   .get(EventController.getEventById)
-  .patch(passport.authenticate('jwt', { session : false }), upload.array('eventImages'), EventController.updateEvent)
+  .patch(
+    passport.authenticate('jwt', { session: false }),
+    upload.array('images'),
+    EventController.updateEvent
+  )
 
-router.post('/:eventId/join', passport.authenticate('jwt', { session : false }), EventController.joinEvent)
+router.post(
+  '/:eventId/join',
+  passport.authenticate('jwt', { session: false }),
+  EventController.joinEvent
+)
 
 router.get('/search/:query', (req, res) => EventController.searchEvents)
 
