@@ -26,6 +26,8 @@ router
     EventController.updateEvent
   )
 
+router.get('/:eventId/details', EventController.getEventDetails)
+
 router.post(
   '/:eventId/join',
   passport.authenticate('jwt', { session: false }),

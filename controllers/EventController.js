@@ -71,6 +71,18 @@ exports.getEventById = async (req, res, next) => {
   }
 }
 
+exports.getEventDetails = async (req, res, next) => {
+  try {
+    const event = await Event.query().findById(req.params.eventId)
+    const images = await event.$relatedQuery('images')
+    const details = await event.$relatedQuery('details')
+
+    res.json({ images, details })
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.updateEvent = async (req, res, next) => {
   try {
     const event = await transaction(
