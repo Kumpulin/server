@@ -3,7 +3,7 @@
 ## Tech Stack
 
 - [**Express**](https://expressjs.com/) Node.js Framework
-- [**Passport**](https://expressjs.com/) Authentication
+- [**Passport**](http://www.passportjs.org/) Authentication
 - [**Sendgrid**](https://sendgrid.com/) Email Delivery Service
 - [**Knex.js**](https://knexjs.org/) SQL query builder
 - [**Objection.js**](https://vincit.github.io/objection.js/) ORM
