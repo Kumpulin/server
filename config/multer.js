@@ -3,7 +3,7 @@ const multer = require('multer')
 exports.default = {
   storage: multer.diskStorage({
     destination: (req, file, next) => {
-      next(null, '../uploads')
+      next(null, 'public/images/uploads')
     },
 
     filename: (req, file, next) => {
