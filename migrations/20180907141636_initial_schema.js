@@ -9,6 +9,7 @@ exports.up = knex => {
       table.string('password').nullable()
       table.string('resetPasswordToken').nullable()
       table.string('resetPasswordExpires').nullable()
+      table.string('image')
       table.timestamps(true, true)
     }),
     knex.schema.createTable('events', table => {
@@ -46,6 +47,7 @@ exports.up = knex => {
       table.string('full_address').notNull()
       table.text('description').nullable()
       table.enu('privacy', ['PUBLIC', 'PRIVATE']).notNull()
+      table.string('password').nullable()
       table.string('type').nullable()
       table.string('topic').nullable()
       table.timestamps(true, true)
