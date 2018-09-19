@@ -121,18 +121,14 @@ exports.updateEvent = async (req, res, next) => {
           }
         )
 
-        const images = req.files.map(image => ({
-          eventId: event.id,
-          image: image.filename
-        }))
-
-        await EventImage.query()
-          .patch(images)
-          .where('eventId', req.params.eventId)
+        for (image of req.files) {
+          await EventImage.query()
+            .patch({ image: image.filename })
+            .where('eventId', req.params.eventId)
+        }
 
         await EventDetails.query()
           .patch({
-            eventId: event.id,
             full_address: eventDetails.full_address,
             description: eventDetails.description,
             privacy: additionalSettings.privacy,
