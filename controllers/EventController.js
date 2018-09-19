@@ -8,6 +8,8 @@ const EventDetails = require('../models/EventDetails')
 exports.getAllEvents = async (req, res, next) => {
   try {
     const events = await Event.query()
+      .skipUndefined()
+      .where('title', 'like', `%${req.query.q}%`)
 
     res.json({ events })
   } catch (err) {
@@ -143,19 +145,6 @@ exports.updateEvent = async (req, res, next) => {
     )
 
     res.json({ event })
-  } catch (err) {
-    next(err)
-  }
-}
-
-exports.searchEvents = async (req, res, next) => {
-  try {
-    const events = await Event.query()
-      .join('event_details', 'events.id', '=', 'event_details.eventId')
-      .skipUndefined()
-      .where('title', 'like'`%${req.query.q}%`)
-
-    res.json({ events })
   } catch (err) {
     next(err)
   }
