@@ -153,10 +153,7 @@ exports.searchEvents = async (req, res, next) => {
     const events = await Event.query()
       .join('event_details', 'events.id', '=', 'event_details.eventId')
       .skipUndefined()
-      .where('title', 'like'`%${req.params.query}%`)
-      .where('type', req.query.type)
-      .where('topic', req.query.topic)
-      .where('privacy', req.query.privacy)
+      .where('title', 'like'`%${req.query.q}%`)
 
     res.json({ events })
   } catch (err) {

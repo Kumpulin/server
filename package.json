@@ -8,7 +8,7 @@
     "rollback": "knex migrate:rollback",
     "migrate": "knex migrate:latest",
     "seed": " knex seed:run",
-    "start": "npm run migrate && node app.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "Gibran Khrisna Putra <gibrankhrisnaputra@gmail.com>",

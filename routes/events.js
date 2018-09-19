@@ -34,6 +34,6 @@ router.post(
   EventController.joinEvent
 )
 
-router.get('/search/:query', (req, res) => EventController.searchEvents)
+router.get('/search', (req, res) => EventController.searchEvents)
 
 module.exports = router
