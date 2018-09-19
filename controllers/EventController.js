@@ -103,16 +103,44 @@ exports.updateEvent = async (req, res, next) => {
   try {
     const event = await transaction(
       Event,
+      EventImage,
       EventDetails,
-      async (Event, EventDetails) => {
+      async (Event, EventImage, EventDetails) => {
+        const eventDetails = JSON.parse(req.body.event_details)
+        const additionalSettings = JSON.parse(req.body.additional_settings)
+
         const event = await Event.query().patchAndFetchById(
           req.params.eventId,
-          { ...req.body.event, eventImage: req.file.path }
+          {
+            title: eventDetails.title,
+            start: format(eventDetails.start, 'YYYY-MM-DD HH:mm:ss'),
+            end: format(eventDetails.end, 'YYYY-MM-DD HH:mm:ss'),
+            city_name: eventDetails.city_name,
+            latitude: eventDetails.latitude,
+            longitude: eventDetails.longitude
+          }
         )
 
+        const images = req.files.map(image => ({
+          eventId: event.id,
+          image: image.filename
+        }))
+
+        await EventImage.query()
+          .patch(images)
+          .where('eventId', req.params.eventId)
+
         await EventDetails.query()
-          .patch({ ...req.body.eventDetails })
-          .where({ eventId: req.params.eventId })
+          .patch({
+            eventId: event.id,
+            full_address: eventDetails.full_address,
+            description: eventDetails.description,
+            privacy: additionalSettings.privacy,
+            password: additionalSettings.password,
+            type: additionalSettings.type,
+            topic: additionalSettings.topic
+          })
+          .where('eventId', req.params.eventId)
 
         return event
       }
