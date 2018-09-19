@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 exports.getAllCreatedEvents = async (req, res, next) => {
   try {

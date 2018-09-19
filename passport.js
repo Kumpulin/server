@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const LocalStrategy = require('passport-local').Strategy
 const JWTStrategy = require('passport-jwt').Strategy
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const passportConfig = require('./config/passport')
 const User = require('./models/User')
