@@ -76,16 +76,16 @@ Authentication required
 | `/account/`                | GET  | Get current user data        | -                            | [user](#user) |
 | `/account/change_password` | POST | Change current user password | `oldPassword`, `newPassword` | [user](#user) |
 
-### `/users`
+### `/events`
 
 Authentication required
 
-| Endpoint     | HTTP   | Description                | Body  | Return                  |
-| ------------ | ------ | -------------------------- | ----- | ----------------------- |
-| `/users/`    | GET    | Get all users data         | -     | [List of users](#users) |
-| `/users/:id` | GET    | Get one user user by id    | -     | [user](#user)           |
-| `/users/:id` | PATCH  | Update one user data by id | `all` | [user](#user)           |
-| `/users/:id` | DELETE | Delete one user data by id | -     | `{ success: true }`     |
+| Endpoint            | HTTP   | Description                     | Body  | Return                       |
+| ------------------- | ------ | ------------------------------- | ----- | ---------------------------  |
+| `/events/`          | GET    | Get all events data             | -     | [List of events](#events)    |
+| `/:eventId`         | GET    | Get event data by id            | -     | [eventId](#events)           |
+| `/:eventId/details` | GET    | Get event details data by id    | -     | [event details](#events)     |
+| `/:eventId/join`    | POST   | Update event data by id         | -     | `{ success: true }`          |
 
 ## JSON Objects returned by API
 
