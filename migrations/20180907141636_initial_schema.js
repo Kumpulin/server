@@ -18,8 +18,8 @@ exports.up = knex => {
       table.datetime('start').notNull()
       table.datetime('end').nullable()
       table.string('city_name').notNull()
-      table.decimal('latitude', true).notNull()
-      table.decimal('longitude', true).notNull()
+      table.decimal('latitude', 8).notNull()
+      table.decimal('longitude', 8).notNull()
       table.integer('userId').unsigned()
       table
         .foreign('userId')
