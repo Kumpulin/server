@@ -3,8 +3,6 @@ const format = require('date-fns/format')
 const multiparty = require('multiparty')
 const { uploadImage, deleteImage } = require('../config/aws')
 
-const form = new multiparty.Form()
-
 const Event = require('../models/Event')
 const EventImage = require('../models/EventImage')
 const EventDetails = require('../models/EventDetails')
@@ -23,6 +21,8 @@ exports.getAllEvents = async (req, res, next) => {
 
 exports.createEvent = async (req, res, next) => {
   try {
+    const form = new multiparty.Form()
+
     form.parse(req, async (err, fields, files) => {
       if (err) return next(err)
 
@@ -109,10 +109,10 @@ exports.getEventDetails = async (req, res, next) => {
 
 exports.updateEvent = async (req, res, next) => {
   try {
+    const form = new multiparty.Form()
+
     form.parse(req, async (err, fields, files) => {
       if (err) next(err)
-
-      console.log(fields, files)
 
       const event = await transaction(
         Event,
