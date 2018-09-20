@@ -1,5 +1,9 @@
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
+const multiparty = require('multiparty')
+const { uploadImage, deleteImage } = require('../config/aws')
+
+const form = new multiparty.Form()
 
 exports.getAllCreatedEvents = async (req, res, next) => {
   try {
@@ -60,13 +64,23 @@ exports.getUserProfile = async (req, res, next) => {
 
 exports.updateProfileImage = async (req, res, next) => {
   try {
-    const data = await User.query().patchAndFetchById(req.user.id, {
-      image: req.file.filename
+    form.parse(req, async (err, fields, files) => {
+      if (err) return next(err)
+
+      const user = await User.query().findById(req.user.id)
+
+      await deleteImage(user.image)
+
+      const { Key } = await uploadImage(files.image[0].path, 'users')
+
+      const updatedUser = await User.query().patchAndFetchById(req.user.id, {
+        image: Key
+      })
+
+      delete user.password
+
+      res.json({ user: updatedUser })
     })
-
-    delete data.password
-
-    res.json({ user: data })
   } catch (err) {
     next(err)
   }

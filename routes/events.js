@@ -1,19 +1,14 @@
 const express = require('express')
-const multer = require('multer')
 const router = express.Router()
 const passport = require('passport')
 
-const storage = require('../config/multer')
 const EventController = require('../controllers/EventController')
-
-const upload = multer({ storage })
 
 router
   .route('/')
   .get(EventController.getAllEvents)
   .post(
     passport.authenticate('jwt', { session: false }),
-    upload.array('images'),
     EventController.createEvent
   )
 
@@ -22,7 +17,6 @@ router
   .get(EventController.getEventById)
   .patch(
     passport.authenticate('jwt', { session: false }),
-    upload.array('images'),
     EventController.updateEvent
   )
 
