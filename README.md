@@ -4,7 +4,6 @@
 
 - [**Express**](https://expressjs.com/) Node.js Framework
 - [**Passport**](http://www.passportjs.org/) Authentication
-- [**Sendgrid**](https://sendgrid.com/) Email Delivery Service
 - [**Knex.js**](https://knexjs.org/) SQL query builder
 - [**Objection.js**](https://vincit.github.io/objection.js/) ORM
 - [**MySQL**](https://www.mysql.com/) SQL Database
@@ -80,12 +79,12 @@ Authentication required
 
 Authentication required
 
-| Endpoint            | HTTP   | Description                     | Body  | Return                       |
-| ------------------- | ------ | ------------------------------- | ----- | ---------------------------  |
-| `/events/`          | GET    | Get all events data             | -     | [List of events](#events)    |
-| `/:eventId`         | GET    | Get event data by id            | -     | [eventId](#events)           |
-| `/:eventId/details` | GET    | Get event details data by id    | -     | [event details](#events)     |
-| `/:eventId/join`    | POST   | Update event data by id         | -     | `{ success: true }`          |
+| Endpoint            | HTTP | Description                  | Body | Return                    |
+| ------------------- | ---- | ---------------------------- | ---- | ------------------------- |
+| `/events/`          | GET  | Get all events data          | -    | [List of events](#events) |
+| `/:eventId`         | GET  | Get event data by id         | -    | [eventId](#events)        |
+| `/:eventId/details` | GET  | Get event details data by id | -    | [event details](#events)  |
+| `/:eventId/join`    | POST | Update event data by id      | -    | `{ success: true }`       |
 
 ## JSON Objects returned by API
 
