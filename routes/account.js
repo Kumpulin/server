@@ -8,7 +8,7 @@ router.get('/joined_events', AccountController.getAllJoinedEvents)
 router.get('/attended_events', AccountController.getAllAttendedEvents)
 
 router.get('/', AccountController.getUserProfile)
-router.post('/update_profile', AccountController.updateProfile)
+router.patch('/update_profile', AccountController.updateProfile)
 router.post('/change_password', AccountController.changePassword)
 
 module.exports = router
