@@ -60,7 +60,13 @@ exports.getUserProfile = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try {
-    const data = await User.query().patchAndFetchById(req.params.id, req.body)
+    const data = await User.query()
+      .skipUndefined()
+      .patchAndFetchById(req.params.id, {
+        name: req.body.name,
+        email: req.body.email,
+        image: req.body.image
+      })
 
     delete data.password
 
